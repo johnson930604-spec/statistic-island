@@ -1,0 +1,490 @@
+/* 畫面以柔和的海綠與紙張色為主；所有版面與動畫都集中在這個檔案。 */
+:root {
+  color-scheme: light;
+  --紙白: #fbfcf8;
+  --紙色: #f5f6f0;
+  --深綠: #2d5143;
+  --主綠: #4d7860;
+  --淡綠: #e8eee1;
+  --墨色: #303e35;
+  --灰字: #788177;
+  --邊線: #e3e7db;
+  --橘色: #ca8c60;
+  --字體: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--紙白); color: var(--墨色); font-family: var(--字體); font-size: 14px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+body.視窗開啟 { overflow: hidden; }
+button, input, select { font: inherit; }
+button { color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+button, a, input, select { outline-offset: 5px; }
+:focus-visible { outline: 3px solid #b68c55; }
+button:disabled { cursor: default; opacity: .55; }
+button, a { touch-action: manipulation; }
+button { border: 0; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, p { margin: 0; }
+svg { display: block; }
+[hidden] { display: none !important; }
+.圖示定義 { position: absolute; width: 0; height: 0; overflow: hidden; }
+.圖示 { width: 21px; height: 21px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.65; stroke-linecap: round; stroke-linejoin: round; }
+.螢幕閱讀文字 { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* 側欄在大螢幕固定；窄螢幕改為頂端導覽，不會擋住課程。 */
+.側邊欄 { width: 238px; position: fixed; inset: 0 auto 0 0; z-index: 15; display: flex; flex-direction: column; padding: 33px 20px 0; background: #f2f4eb; border-right: 1px solid var(--邊線); }
+.品牌 { display: flex; align-items: center; gap: 12px; padding: 0 9px; font-size: 23px; font-weight: 700; line-height: 1.2; letter-spacing: 1.2px; color: var(--深綠); }
+.品牌圖示 { display: grid; place-items: center; width: 40px; height: 43px; border-radius: 12px; background: var(--深綠); color: #f1e4c6; }
+.品牌圖示 .圖示 { width: 27px; height: 27px; stroke-width: 1.3; }
+.品牌 small { display: block; font-size: 10px; font-weight: 400; letter-spacing: 1.5px; color: #7c8874; margin-top: 7px; }
+.課程識別 { display: flex; align-items: center; gap: 8px; margin: 32px 8px 31px; padding: 10px 11px; border: 1px solid #dbe2d2; border-radius: 7px; font-size: 11px; color: #6b785e; background: #eef2e5; letter-spacing: .7px; }
+.在線圓點 { display: inline-block; width: 6px; height: 6px; flex-shrink: 0; border-radius: 50%; background: #72956d; }
+.導覽分隔字 { font-size: 10px; letter-spacing: 1.4px; color: #8a9380; margin: 0 13px 13px; }
+.導覽列表 { display: grid; gap: 7px; }
+.導覽項目 { display: flex; align-items: center; gap: 13px; width: 100%; min-height: 47px; border-radius: 8px; padding: 11px 13px; text-align: left; background: transparent; font-size: 13px; color: #6e7969; transition: background .2s, color .2s; }
+.導覽項目 .圖示 { width: 19px; height: 19px; }
+.導覽項目:hover { background: #e8eddf; color: var(--深綠); }
+.導覽項目.啟用 { color: var(--深綠); background: #e0e8d6; font-weight: 600; }
+.導覽小圓 { display: grid; place-items: center; width: 21px; height: 21px; background: #f5f8ee; border-radius: 6px; font-size: 11px; margin-left: auto; font-weight: 500; }
+.側欄分隔線 { height: 1px; background: #dfe5d5; margin: 25px 12px 23px; }
+.小標籤 { margin-left: auto; border: 1px solid #d8ddce; padding: 1px 5px; border-radius: 4px; font-size: 9px; letter-spacing: .6px; font-weight: 400; }
+.側欄底部 { margin-top: auto; padding-top: 32px; }
+.探索進度卡 { padding: 16px 14px 14px; margin-bottom: 21px; background: #e9efdf; border: 1px solid #dfe6d3; border-radius: 9px; }
+.進度圖示 { display: flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 500; color: #5e7554; margin-bottom: 15px; }
+.進度圖示 .圖示 { width: 16px; height: 16px; stroke: #a28d50; }
+.進度文字 { display: flex; justify-content: space-between; font-size: 10px; color: #808976; margin-bottom: 8px; }
+.進度文字 strong { color: #536d49; font-size: 11px; }
+.進度軌 { height: 5px; background: #d7e0cd; border-radius: 8px; overflow: hidden; }
+.進度條 { height: 100%; width: 0; background: #759865; border-radius: inherit; transition: width .5s ease; }
+.探索進度卡 > p { color: #7b8871; margin-top: 8px; font-size: 10px; }
+.旅人名片 { display: flex; align-items: center; gap: 10px; width: calc(100% + 40px); margin-left: -20px; padding: 18px 23px; border-top: 1px solid #dfe5d5; background: transparent; text-align: left; }
+.旅人名片:hover { background: #e8eddf; }
+.旅人頭像 { width: 35px; height: 35px; flex-shrink: 0; display: grid; place-items: center; background: #e3d6bc; color: #88724f; border-radius: 50%; font-size: 13px; }
+.旅人資料 { min-width: 0; }
+.旅人資料 strong { display: block; font-size: 12px; font-weight: 600; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 125px; }
+.旅人資料 small { display: block; font-size: 9px; color: #8a9181; margin-top: 1px; }
+.名片箭頭 { margin-left: auto; color: #8b9583; }
+.主體 { margin-left: 238px; }
+.頂列 { height: 76px; border-bottom: 1px solid var(--邊線); padding: 0 39px; display: flex; align-items: center; justify-content: space-between; }
+.頁面路徑 { display: flex; align-items: center; gap: 13px; font-size: 11px; color: #8c9387; }
+.頁面路徑 span { color: #bbc2b4; }
+.頁面路徑 strong { color: #596b56; font-weight: 500; }
+.頂列工具 { display: flex; align-items: center; gap: 22px; }
+.本機標記 { display: flex; align-items: center; gap: 7px; font-size: 10px; color: #909687; }
+.圖示按鈕 { display: inline-grid; place-items: center; height: 34px; width: 34px; border-radius: 50%; color: #7c8b75; background: transparent; }
+.圖示按鈕:hover { background: var(--淡綠); }
+.圖示按鈕 .圖示 { width: 19px; height: 19px; }
+main { max-width: 1670px; margin: 0 auto; padding: 0 39px; }
+.頁面 { animation: 頁面浮現 .35s ease both; }
+@keyframes 頁面浮現 { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+.首頁抬頭 { display: flex; justify-content: space-between; align-items: center; gap: 25px; padding: 35px 0 29px; }
+.小標 { font-size: 10px; font-weight: 500; letter-spacing: 1.9px; color: #849171; margin-bottom: 10px; }
+.小葉子 { color: #a0ad85; margin-right: 4px; }
+h1 { font-size: clamp(25px, 2.1vw, 35px); font-weight: 600; line-height: 1.5; letter-spacing: 1.2px; color: #334b3b; }
+.標題重點 { color: #7e9466; }
+.首頁介紹 { margin-top: 9px; font-size: 12px; letter-spacing: .2px; color: #737f69; }
+.手機換行 { display: none; }
+.主按鈕 { display: inline-flex; justify-content: center; align-items: center; gap: 12px; padding: 12px 20px; border-radius: 7px; background: var(--深綠); color: #f7f8ee; font-size: 12px; font-weight: 500; letter-spacing: .4px; transition: background .2s, transform .2s; }
+.主按鈕:hover { background: #3d6550; transform: translateY(-1px); }
+.主按鈕 .圖示 { width: 17px; height: 17px; }
+.出發按鈕 { padding: 12px 17px; white-space: nowrap; margin-top: 15px; box-shadow: 0 4px 12px #2d514310; }
+.次按鈕 { display: inline-flex; justify-content: center; align-items: center; gap: 7px; padding: 10px 16px; background: #fffefa; border: 1px solid #dce3d5; border-radius: 7px; font-size: 12px; color: #536a52; }
+.次按鈕:hover { background: #edf2e6; }
+.文字按鈕 { display: inline-flex; align-items: center; gap: 8px; background: transparent; font-size: 11px; padding: 6px 0; color: #6e8064; }
+.文字按鈕:hover { color: #304c3a; }
+
+/* 群島由向量圖與獨立按鈕組成，滑鼠、觸控與鍵盤都能進入。 */
+.地圖外框 { overflow: hidden; border-radius: 12px; border: 1px solid #dce6d7; background: #e8f1e5; box-shadow: 0 5px 18px #496a4f04; }
+.地圖頂列 { min-height: 49px; display: flex; align-items: center; justify-content: space-between; padding: 0 21px; background: #f4f7eeaa; border-bottom: 1px solid #dce6d7; }
+.地圖標題 { display: inline-flex; gap: 8px; align-items: center; color: #667b60; font-size: 11px; font-weight: 500; letter-spacing: .4px; }
+.地圖標題 .圖示 { width: 16px; height: 16px; }
+.地圖副標 { font-size: 9px; font-weight: 400; color: #93a084; border-left: 1px solid #d2ddca; padding-left: 12px; margin-left: 5px; }
+.地圖說明鈕 { background: transparent; color: #7f8f75; font-size: 10px; padding: 8px 0 8px 10px; }
+.地圖說明鈕 span { margin-left: 8px; }
+.地圖區 { position: relative; aspect-ratio: 1200 / 535; min-height: 350px; overflow: hidden; }
+.群島插畫 { position: absolute; width: 100%; height: 100%; inset: 0; }
+.手機群島插畫 { display: none; }
+.探索航線 { animation: 航線流動 48s linear infinite; }
+@keyframes 航線流動 { to { stroke-dashoffset: -140; } }
+.雲朵一 { animation: 雲移動 12s ease-in-out infinite alternate; }
+.雲朵二 { animation: 雲移動 15s ease-in-out -3s infinite alternate-reverse; }
+.雲朵三 { animation: 雲移動 17s ease-in-out -5s infinite alternate; }
+@keyframes 雲移動 { from { transform: translateX(-8px); } to { transform: translateX(9px); } }
+.漂浮骰子 { animation: 骰子漂浮 5s ease-in-out infinite; }
+@keyframes 骰子漂浮 { 50% { transform: translateY(-5px); } }
+.島嶼入口 { position: absolute; display: flex; align-items: center; gap: 9px; min-width: 192px; padding: 10px 11px; background: #fffcf0f5; border: 1px solid #fefdf6; border-radius: 9px; text-align: left; box-shadow: 0 5px 14px #506f4f15, 0 1px 1px #506f4f10; transform: translate(-50%, -50%); transition: box-shadow .2s, margin-top .2s; }
+.島嶼入口:after { content: ""; position: absolute; bottom: -6px; left: 50%; transform: rotate(45deg); width: 10px; height: 10px; background: #fffcf0; border-right: 1px solid #fff; border-bottom: 1px solid #fff; }
+.島嶼入口:hover { margin-top: -5px; box-shadow: 0 8px 24px #506f4f2b; }
+.島嶼序號 { align-self: flex-start; display: grid; place-items: center; width: 29px; height: 31px; background: #efe2ca; color: #ac875d; border-radius: 6px; font-size: 11px; font-weight: 500; }
+.島嶼標籤 strong { display: block; font-size: 13px; font-weight: 600; letter-spacing: .7px; color: #526147; }
+.島嶼標籤 small { display: block; font-size: 10px; color: #7c856b; letter-spacing: .2px; margin-top: 2px; }
+.入口箭頭 { margin-left: auto; padding-left: 4px; font-size: 15px; color: #acb59b; }
+.島嶼圓點 { position: absolute; bottom: -22px; left: calc(50% - 3px); width: 7px; height: 7px; border-radius: 50%; background: #b69162; box-shadow: 0 0 0 5px #fff4d64d; }
+.描述入口 { left: 23.4%; top: 73%; }
+.機率入口 { left: 53%; top: 48%; }
+.機率入口 .島嶼序號 { background: #e2e7d4; color: #7e916b; }
+.機率入口 .島嶼圓點 { background: #91a171; }
+.抽樣入口 { left: 81%; top: 82%; }
+.抽樣入口 .島嶼序號 { background: #dfe9e1; color: #729582; }
+.抽樣入口 .島嶼圓點 { background: #6f9c8b; }
+.島嶼入口.已完成 .島嶼序號 { background: #d5e7cd; color: #4d7451; }
+.島嶼入口.已完成 .入口箭頭 { font-size: 0; }
+.島嶼入口.已完成 .入口箭頭:after { content: "✓"; font-size: 15px; color: #739a64; }
+.地圖角註 { position: absolute; bottom: 18px; left: 23px; display: flex; align-items: center; gap: 7px; font-size: 9px; color: #7f947e; }
+.地圖角註 .在線圓點 { height: 4px; width: 4px; background: #8fa681; }
+.地圖座標 { position: absolute; bottom: 18px; right: 22px; font-size: 8px; letter-spacing: 1px; color: #92a58f; }
+.章節區抬頭 { display: flex; justify-content: space-between; align-items: center; margin: 26px 0 16px; gap: 10px; }
+.章節區抬頭 h2 { font-size: 15px; letter-spacing: .5px; font-weight: 600; color: #465942; }
+.章節區抬頭 p { font-size: 11px; color: #78846b; margin-top: 4px; }
+.章節數量 { font-size: 9px; letter-spacing: .4px; color: #959b8c; }
+.章節卡網格 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.章節卡 { padding: 18px 18px 11px; text-align: left; background: #fdfdf9; border: 1px solid #e5e7dc; border-radius: 9px; display: flex; flex-direction: column; transition: transform .2s, border-color .2s, box-shadow .2s; }
+.章節卡:hover { transform: translateY(-3px); border-color: #bdcbb1; box-shadow: 0 7px 16px #496a4f09; }
+.章節卡頂 { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.章節圖示 { width: 33px; height: 33px; display: grid; place-items: center; color: #b48a5c; background: #f3ede1; border-radius: 8px; }
+.章節圖示 .圖示 { width: 18px; height: 18px; }
+.機率卡 .章節圖示 { color: #85936c; background: #ecf0e3; }
+.抽樣卡 .章節圖示 { color: #769586; background: #e8f0e8; }
+.章節狀態 { font-size: 9px; color: #a0a48e; padding: 2px 6px; border: 1px solid #e6e8dc; border-radius: 4px; }
+.章節卡標題 small { display: block; font-size: 9px; letter-spacing: 1px; color: #a3a38c; margin-bottom: 3px; }
+.章節卡標題 strong { display: block; font-size: 14px; font-weight: 600; letter-spacing: .2px; color: #506047; }
+.章節卡介紹 { display: block; font-size: 12px; color: #768169; line-height: 1.9; margin-top: 7px; margin-bottom: 17px; flex: 1; }
+.章節卡底 { display: flex; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid #eceee3; font-size: 9px; color: #8b967f; }
+.卡片箭頭 { font-size: 16px; color: #9fa98e; }
+.首頁底註 { display: flex; align-items: center; justify-content: space-between; margin: 22px 0 12px; }
+.首頁底註 > span { display: flex; align-items: center; gap: 7px; font-size: 10px; color: #959d89; }
+.首頁底註 .圖示 { width: 14px; height: 14px; color: #a0b18b; }
+.首頁底註 .文字按鈕 { font-size: 10px; }
+.頁尾 { max-width: 1670px; margin: 0 auto; padding: 20px 39px; display: flex; justify-content: space-between; font-size: 9px; color: #a3a897; letter-spacing: .3px; }
+
+/* 課程使用原生對話框，保留鍵盤焦點與關閉行為。 */
+dialog { color: var(--墨色); background: #fbfcf7; border: 1px solid #e2e7d8; padding: 0; border-radius: 16px; box-shadow: 0 30px 100px #25433330; }
+dialog::backdrop { background: #233e32a6; backdrop-filter: blur(5px); }
+dialog[open] { animation: 視窗浮現 .25s ease; }
+@keyframes 視窗浮現 { from { opacity: 0; transform: translateY(12px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.課程視窗 { width: min(1040px, calc(100vw - 60px)); max-height: min(92dvh, 1000px); overflow-y: auto; overscroll-behavior: contain; }
+.關閉視窗 { position: absolute; top: 18px; right: 18px; z-index: 4; background: #eff2e8; }
+.小視窗 { width: min(500px, calc(100vw - 32px)); padding: 35px; max-height: calc(100dvh - 40px); overflow-y: auto; }
+.視窗圖示 { display: grid; place-items: center; height: 46px; width: 46px; background: #e8eedc; color: #8f9d70; font-size: 29px; border-radius: 14px; margin-bottom: 24px; }
+.小視窗 h2 { font-size: 24px; font-weight: 600; margin-bottom: 12px; letter-spacing: .5px; color: #3b573f; }
+.次要文字 { font-size: 12px; color: #718064; line-height: 1.9; }
+.小視窗 form { margin-top: 25px; }
+.小視窗 label { font-size: 11px; font-weight: 500; color: #69785f; }
+.姓名輸入列 { display: flex; gap: 9px; margin-top: 7px; }
+input[type="text"] { min-width: 0; width: 100%; border: 1px solid #dce4d2; border-radius: 7px; background: #fffefa; color: #40563b; padding: 11px 12px; font-size: 12px; }
+input::placeholder { color: #a6ad9b; }
+.姓名輸入列 .主按鈕 { flex-shrink: 0; }
+#旅人列表 { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 19px; }
+#旅人列表 button { padding: 7px 11px; background: #edf1e5; border-radius: 6px; color: #6a805e; font-size: 11px; }
+.本機說明 { font-size: 10px; color: #a0a68f; margin-top: 22px; border-top: 1px solid #e3e8da; padding-top: 15px; }
+.指南步驟 { display: flex; align-items: flex-start; gap: 15px; margin: 23px 0; }
+.指南步驟 > span { display: grid; place-items: center; width: 30px; height: 32px; flex-shrink: 0; background: #edf1e2; border-radius: 7px; font-size: 11px; color: #879a72; }
+.指南步驟 h3 { font-size: 13px; font-weight: 600; margin-bottom: 3px; color: #526c4b; }
+.指南步驟 p { font-size: 11px; color: #859078; }
+.全寬 { width: 100%; margin-top: 20px; }
+.提示框 { padding: 13px 16px; background: #eef2e5; border: 1px solid #e0e7d2; border-radius: 8px; color: #738166; font-size: 11px; line-height: 1.9; }
+.提示訊息 { position: fixed; bottom: 30px; left: calc(50% + 119px); transform: translate(-50%, 15px); z-index: 100; padding: 11px 21px; background: #2c4d3f; color: #f5f5e9; font-size: 12px; border-radius: 9px; box-shadow: 0 7px 30px #2d4e3e26; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; max-width: min(90vw, 530px); }
+.提示訊息.顯示, .提示訊息.啟用 { opacity: 1; transform: translate(-50%, 0); }
+
+/* 以下是三座島嶼共用的課程元件，讓每一堂課有一致的學習節奏。 */
+.課程抬頭 { padding: 34px 44px 24px; background: #eff3e8; border-bottom: 1px solid #e1e7d6; }
+.課程抬頭 h2 { font-size: 27px; color: #3d573e; margin: 7px 40px 7px 0; line-height: 1.4; letter-spacing: .7px; font-weight: 600; }
+.課程說明 { font-size: 13px; line-height: 1.9; color: #718064; max-width: 720px; }
+.徽章 { display: inline-flex; padding: 3px 9px; color: #71845e; background: #e4ecd7; border-radius: 5px; font-size: 10px; font-weight: 500; }
+.步驟列 { display: flex; gap: 5px; padding: 15px 44px; background: #f8faf2; border-bottom: 1px solid #e6ebde; }
+.步驟按鈕 { border-radius: 6px; padding: 8px 14px; font-size: 11px; background: transparent; color: #8e9781; }
+.步驟按鈕.啟用 { background: #e4ecd8; color: #4c6e46; font-weight: 600; }
+.課程版面 { padding: 26px 44px; }
+.課程版面 > h3 { font-size: 18px; margin-bottom: 14px; font-weight: 600; }
+.課程版面 > p { margin-bottom: 15px; }
+.概念卡 { border: 1px solid #e1e7d8; padding: 23px 24px; background: #fffefa; border-radius: 11px; margin-bottom: 15px; }
+.概念卡 h3 { font-size: 16px; font-weight: 600; color: #4f684a; margin-bottom: 10px; }
+.概念卡 p { font-size: 13px; color: #718064; line-height: 2; margin: 7px 0; }
+.概念卡 strong { color: #546d4c; }
+.概念卡 ul { padding-left: 20px; color: #7b8871; font-size: 12px; }
+.概念卡 li { margin: 6px 0; }
+.實驗面板 { border: 1px solid #dfe7d4; background: #fffefa; padding: 22px; border-radius: 11px; margin: 0 0 15px; }
+.實驗面板 h3 { font-size: 16px; margin-bottom: 5px; color: #486442; font-weight: 600; }
+.實驗面板 > p { font-size: 11px; color: #8a957d; margin-bottom: 15px; }
+.數據列 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
+.數據卡 { background: #f0f4e8; border: 1px solid #e7ecde; border-radius: 8px; padding: 14px 16px; }
+.數據卡 strong { display: block; font-size: 25px; line-height: 1.35; font-weight: 500; color: #4c6f49; margin: 4px 0; font-variant-numeric: tabular-nums; }
+.數據卡 span, .數據卡 small { display: block; font-size: 10px; color: #839175; }
+.數據卡 strong small { display: inline; font-size: 10px; margin-left: 3px; }
+.數據列:has(> .數據卡:nth-child(2):last-child) { grid-template-columns: repeat(2, 1fr); }
+.滑桿區 { padding: 14px 0; }
+.滑桿區 label { display: block; font-size: 12px; color: #71815e; font-weight: 500; margin-bottom: 14px; }
+input[type="range"] { accent-color: #708f5f; width: 100%; cursor: pointer; height: 22px; }
+.滑桿區 output { color: #ab7d50; font-weight: 600; }
+.工具列 { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; margin: 15px 0; }
+.工具列 label { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; color: #7d8a72; }
+select { appearance: auto; padding: 9px 12px; border: 1px solid #d9e2cc; border-radius: 6px; color: #5e7651; background: #fafff1; }
+.長條圖 { display: flex; align-items: flex-end; justify-content: space-around; gap: 10px; height: 240px; padding: 25px 15px 50px; background: repeating-linear-gradient(to top, transparent 0, transparent 39px, #e7eddf 40px); border-bottom: 1px solid #dce6d0; margin: 20px 0 30px; }
+.長條項 { position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; flex: 1; max-width: 60px; }
+.長條 { position: relative; width: min(100%, 45px); min-height: 2px; border-radius: 5px 5px 0 0; background: #92ae84; transition: height .3s ease; }
+.長條項:last-child .長條 { background: #d4a678; }
+.長條標籤 { position: absolute; top: calc(100% + 8px); font-size: 10px; color: #8a957c; white-space: nowrap; }
+.圖表標籤 { font-size: 10px; color: #86947a; }
+.圖表標籤 { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.圖柱 { height: 145px; width: min(100%, 45px); display: flex; align-items: flex-end; flex-shrink: 0; }
+.圖柱 .長條 { width: 100%; }
+.柱上數值 { font-size: 10px; font-variant-numeric: tabular-nums; color: #729366; line-height: 22px; }
+.強調長條 .柱上數值 { color: #b88d5e; }
+.長條項 > small { position: absolute; top: calc(100% + 27px); font-size: 9px; white-space: nowrap; }
+.實驗標頭 { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.實驗標頭 p { color: #879478; font-size: 11px; line-height: 1.9; }
+.實驗標頭 .文字按鈕 { white-space: nowrap; flex-shrink: 0; font-size: 10px; }
+.概念卡 h4 { margin: 7px 0 10px; font-size: 15px; font-weight: 600; color: #526d48; }
+.無障礙文字 { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.骰子舞台 { display: flex; align-items: center; gap: 20px; padding: 16px 20px; border: 1px solid #e7ecdd; background: #f3f6ec; border-radius: 10px; margin-top: 15px; }
+.骰子舞台 strong { font-size: 13px; color: #688153; font-weight: 500; }
+.骰子面 { color: #6f8b5e; font-family: "Apple Symbols", "Segoe UI Symbol", sans-serif; font-size: 78px; line-height: 1; height: 85px; display: grid; place-items: center; }
+.圖表空白 { position: absolute; top: 58%; left: 50%; width: 90%; transform: translate(-50%, -50%); font-size: 11px; color: #a1ad91; text-align: center; }
+.樣本詳情 { color: #829273; border: 1px solid #e1e8d5; padding: 12px 15px; background: #f6f8ef; border-radius: 7px; font-size: 11px; margin: 18px 0; }
+.樣本詳情 summary { cursor: pointer; }
+.樣本詳情 p { color: #8b977e; margin-top: 10px; line-height: 2; }
+.挑戰摘要 { padding: 12px 16px; border-radius: 7px; background: #edf2e1; color: #80916c; font-size: 11px; margin: 16px 0; }
+.挑戰摘要 strong { color: #587a46; margin: 0 5px; }
+.選項字母 { display: grid; place-items: center; width: 23px; height: 23px; flex-shrink: 0; border: 1px solid #dee5d2; background: #f5f8ec; border-radius: 5px; font-size: 9px; color: #8e9a7e; }
+.選項按鈕:disabled { opacity: 1; }
+.選項按鈕:disabled:not(.正確) { opacity: .65; }
+.選項按鈕 > span:last-child:not(:nth-child(2)) { margin-left: auto; }
+.旅人選項 { display: flex; align-items: center; gap: 8px; width: 100%; text-align: left; }
+.旅人選項.啟用 { border: 1px solid #adc69c; }
+.旅人選項 .旅人頭像 { width: 27px; height: 27px; font-size: 11px; }
+.旅人選項 small { margin-left: auto; font-size: 9px; color: #9ba68e; }
+.教師工具列 { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.教師紀錄卡 { margin: 20px 0; }
+.教師紀錄卡 h3 { color: #5c7650; font-size: 16px; font-weight: 600; margin-bottom: 11px; }
+.教師表格 tbody th { background: transparent; color: #58704c; font-size: 11px; }
+.教師表格 td small { color: #a1ab93; font-size: 9px; }
+.目前角色 { display: block; font-size: 8px; color: #9caa89; font-weight: 400; }
+.難點項 { display: grid; grid-template-columns: 1fr 1fr auto; gap: 22px; align-items: center; padding: 17px 0; border-top: 1px solid #e8edde; }
+.難點項 strong { display: block; color: #6c825c; font-size: 12px; font-weight: 500; }
+.難點項 small { display: block; font-size: 10px; color: #a1ac93; }
+.難點進度 .進度軌 { background: #eeeade; }
+.難點進度 .進度條 { background: #c8a477; }
+.難點進度 small { font-size: 9px; margin-top: 5px; }
+.空狀態圖示 { color: #9bb283; font-size: 35px; margin-bottom: 10px; }
+.空狀態 .工具列 { justify-content: center; }
+.知識標籤 > span + span:before { content: " · "; color: #a9b199; margin: 0 5px; }
+#旅人列表 > p { width: 100%; font-size: 10px; margin-bottom: 5px; }
+#手冊內容 > .提示框 { margin-top: 20px; }
+#路線內容 > .提示框 { margin-bottom: 20px; }
+.課程頁尾 { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid #e3e9da; padding: 18px 44px; background: #f7f9f0; }
+.課程頁尾 .次要文字 { font-size: 10px; }
+.題目卡 { padding: 21px; border-radius: 10px; border: 1px solid #e0e7d4; background: #fffef9; margin-bottom: 16px; }
+.題目卡 h3, .題目卡 h4 { font-size: 13px; font-weight: 600; color: #4b6142; margin: 6px 0 15px; line-height: 1.85; }
+.選項列表 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.選項按鈕 { display: flex; align-items: center; gap: 10px; padding: 11px 13px; text-align: left; border: 1px solid #e0e5d6; background: #fbfcf5; border-radius: 7px; font-size: 12px; color: #6c7b5f; }
+.選項按鈕:hover { border-color: #9cb18a; background: #f1f6e7; }
+.選項按鈕.正確 { border-color: #93b47f; background: #eaf3df; color: #4b7040; }
+.選項按鈕.錯誤 { border-color: #d8b195; background: #faf0e4; color: #a07854; }
+.解析 { font-size: 12px; line-height: 1.9; margin-top: 11px; padding: 11px 13px; border-radius: 7px; color: #6e7f5e; background: #f0f4e7; }
+.解析.錯誤 { background: #faf1e5; color: #9d7d57; }
+.結業卡 { text-align: center; padding: 24px; border-radius: 11px; border: 1px solid #dce5cc; background: #edf3e1; margin: 20px 0 0; }
+.結業卡 h3 { font-size: 19px; color: #597147; margin-bottom: 8px; }
+.結業卡 p { font-size: 12px; color: #829171; }
+.結業卡 .主按鈕 { margin-top: 16px; }
+.徽章列表 { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; margin: 15px 0; }
+.知識標籤 { padding: 4px 9px; border-radius: 5px; background: #f0f3e9; color: #889579; border: 1px solid #e3e8d8; font-size: 10px; }
+.抽樣圖 { position: relative; height: 170px; margin: 25px 0 35px; border-bottom: 1px solid #cfdcc3; background: repeating-linear-gradient(to top, transparent 0, transparent 39px, #e6ecdc 40px); }
+.抽樣點 { position: absolute; width: 7px; height: 7px; background: #88a976; border-radius: 50%; transform: translateX(-50%); opacity: .8; }
+.圖表參考線 { position: absolute; top: 0; bottom: 0; border-left: 2px dashed #c29463; z-index: 1; }
+.圖表參考線 span { position: absolute; top: -23px; left: 5px; font-size: 9px; color: #a78159; white-space: nowrap; }
+
+/* 學習路線、口袋手冊與教師觀察站。 */
+.分頁抬頭 { padding: 39px 0 29px; }
+.分頁抬頭 > p:last-child { color: #8a957d; font-size: 12px; margin-top: 10px; }
+.卡片 { border: 1px solid #e1e7d6; border-radius: 11px; padding: 23px; background: #fffefa; }
+.路線卡 { display: flex; gap: 23px; align-items: center; padding: 25px; border: 1px solid #e0e7d4; background: #fffefa; border-radius: 11px; margin-bottom: 17px; }
+.路線編號 { display: grid; place-items: center; width: 55px; height: 60px; background: #edf2e1; border: 1px solid #e3e9d6; color: #8ca173; font-size: 22px; border-radius: 12px; flex-shrink: 0; }
+.路線資訊 { flex: 1; }
+.路線資訊 h3 { font-size: 17px; font-weight: 600; color: #4d6745; margin: 5px 0; }
+.路線資訊 p { font-size: 12px; color: #8c977e; margin: 5px 0 10px; }
+.路線資訊 .進度軌 { width: min(260px, 100%); margin-top: 10px; }
+.手冊網格 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.手冊卡 { padding: 25px; border: 1px solid #dfe6d2; background: #fffefa; border-radius: 11px; }
+.手冊卡 h3 { color: #536d49; font-size: 19px; margin: 10px 0 15px; font-weight: 600; }
+.手冊卡 h4 { font-size: 12px; color: #627c54; margin: 20px 0 5px; }
+.手冊卡 p { font-size: 12px; color: #8a957c; line-height: 2; margin: 9px 0; }
+.手冊卡 .提示框 { margin: 15px 0; }
+.教師統計 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 22px 0; }
+.教師統計 .數據卡 { padding: 19px; }
+.教師統計 .數據卡 strong { font-size: 30px; }
+.表格容器 { overflow-x: auto; border: 1px solid #e0e6d5; border-radius: 10px; margin: 18px 0; background: #fffefa; }
+.教師表格 { width: 100%; border-collapse: collapse; font-size: 11px; text-align: left; white-space: nowrap; }
+.教師表格 th { background: #f0f4e7; padding: 15px 18px; font-weight: 500; color: #748566; border-bottom: 1px solid #e0e6d4; }
+.教師表格 td { padding: 16px 18px; border-bottom: 1px solid #edf0e5; color: #7f8b73; }
+.教師表格 tr:last-child td { border-bottom: none; }
+.教師表格 td:first-child { color: #51684a; font-weight: 500; }
+.教師表格 tr:hover td { background: #fafcf3; }
+.切換組 { display: inline-flex; gap: 3px; padding: 4px; background: #eef2e5; border: 1px solid #e0e7d3; border-radius: 8px; }
+.切換組 button { padding: 8px 15px; border-radius: 5px; font-size: 11px; color: #849474; background: transparent; }
+.切換組 button.啟用 { color: #47683d; background: #fffef8; box-shadow: 0 1px 5px #37512a0c; }
+.空狀態 { text-align: center; padding: 50px 20px; border: 1px dashed #d8e2c9; border-radius: 11px; background: #f6f9ed; margin: 20px 0; }
+.空狀態 h3 { font-size: 17px; color: #638052; margin-bottom: 9px; }
+.空狀態 p { color: #91a07e; font-size: 12px; margin-bottom: 17px; }
+.範例提示 { color: #a48258; background: #f6f0e4; border: 1px solid #e8dbc5; padding: 12px 16px; border-radius: 8px; font-size: 11px; margin: 17px 0; }
+
+@media (min-width: 1650px) {
+  .首頁抬頭 { padding-top: 42px; padding-bottom: 35px; }
+  .地圖區 { aspect-ratio: 1200 / 515; }
+  .章節卡 { padding: 23px 23px 14px; }
+  .章節卡標題 strong { font-size: 15px; }
+  .章節卡介紹 { font-size: 12px; }
+  .章節卡底 { font-size: 10px; }
+}
+@media (max-width: 1200px) {
+  .側邊欄 { width: 210px; padding-right: 15px; padding-left: 15px; }
+  .品牌 { font-size: 21px; padding: 0 7px; gap: 9px; }
+  .品牌 small { font-size: 9px; }
+  .主體 { margin-left: 210px; }
+  main { padding: 0 28px; }
+  .頂列, .頁尾 { padding-left: 28px; padding-right: 28px; }
+  .旅人名片 { width: calc(100% + 30px); margin-left: -15px; padding-left: 22px; padding-right: 18px; }
+  .首頁抬頭 { align-items: flex-start; }
+  h1 { font-size: 26px; }
+  .首頁介紹 { max-width: 450px; line-height: 1.9; }
+  .出發按鈕 { font-size: 11px; padding: 11px 13px; margin-top: 30px; gap: 7px; }
+  .地圖區 { min-height: 320px; }
+  .島嶼入口 { min-width: 166px; gap: 7px; padding: 8px 9px; }
+  .島嶼標籤 strong { font-size: 11px; }
+  .島嶼標籤 small { font-size: 8px; }
+  .島嶼序號 { width: 25px; height: 28px; font-size: 10px; }
+  .章節卡網格 { gap: 12px; }
+  .章節卡 { padding: 15px 13px 10px; }
+  .章節卡標題 strong { font-size: 12px; }
+  .章節卡介紹 { font-size: 10px; }
+  .提示訊息 { left: calc(50% + 105px); }
+  .手冊網格 { grid-template-columns: 1fr; }
+  .手冊卡 { padding: 24px; }
+}
+@media (max-width: 900px) {
+  .側邊欄 { position: relative; width: 100%; padding: 19px 24px 0; border-right: 0; border-bottom: 1px solid #dee5d3; display: grid; grid-template-columns: 1fr auto; gap: 18px; }
+  .品牌 { font-size: 21px; padding: 0; }
+  .品牌圖示 { width: 35px; height: 38px; }
+  .品牌 small { font-size: 9px; margin-top: 5px; }
+  .課程識別, .導覽分隔字, .側欄分隔線, .探索進度卡 { display: none; }
+  .導覽列表 { display: contents; }
+  .導覽項目 { width: auto; min-height: 43px; padding: 11px 12px; gap: 8px; justify-content: center; font-size: 12px; }
+  .導覽列表 > .導覽項目, .側邊欄 > .導覽項目 { grid-row: 2; border-radius: 7px 7px 0 0; }
+  .側邊欄 { grid-template-columns: repeat(4, 1fr); column-gap: 5px; row-gap: 17px; }
+  .品牌 { grid-column: 1 / 3; }
+  .側欄底部 { grid-column: 3 / 5; grid-row: 1; padding: 0; margin: 0; justify-self: end; }
+  .旅人名片 { border: 0; padding: 1px 0; margin: 0; width: auto; gap: 8px; }
+  .旅人名片:hover { background: transparent; }
+  .旅人頭像 { width: 32px; height: 32px; }
+  .旅人資料 strong { font-size: 11px; max-width: 100px; }
+  .旅人資料 small { font-size: 8px; }
+  .名片箭頭 { display: none; }
+  .導覽小圓, .小標籤 { display: none; }
+  .主體 { margin-left: 0; }
+  .頂列 { height: 53px; }
+  .首頁抬頭 { padding-top: 27px; }
+  .首頁介紹 { max-width: 440px; }
+  .地圖區 { min-height: 330px; }
+  .提示訊息 { left: 50%; }
+  .教師統計 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .側邊欄 { padding: 17px 14px 0; }
+  .品牌 { font-size: 19px; }
+  .品牌 small { font-size: 8px; letter-spacing: .8px; }
+  .品牌圖示 { width: 32px; height: 35px; border-radius: 9px; }
+  .品牌圖示 .圖示 { width: 24px; height: 24px; }
+  .導覽項目 { padding: 10px 4px; gap: 4px; font-size: 10px; }
+  .導覽項目 .圖示 { width: 16px; height: 16px; }
+  .旅人資料 small { display: none; }
+  .旅人資料 strong { max-width: 85px; }
+  .頂列 { padding: 0 19px; height: 47px; }
+  .頂列工具 { gap: 8px; }
+  .本機標記 { font-size: 8px; }
+  .頁面路徑 { font-size: 9px; gap: 8px; }
+  main { padding: 0 18px; }
+  .首頁抬頭 { display: block; padding: 27px 0 24px; }
+  .小標 { font-size: 9px; letter-spacing: 1.5px; }
+  h1 { font-size: 27px; line-height: 1.55; letter-spacing: 1px; }
+  .手機換行 { display: block; }
+  .首頁介紹 { font-size: 11px; line-height: 1.9; max-width: 330px; margin-top: 10px; }
+  .出發按鈕 { padding: 11px 16px; margin-top: 19px; font-size: 11px; }
+  .地圖頂列 { padding: 0 12px; min-height: 45px; }
+  .地圖標題 { font-size: 10px; gap: 5px; }
+  .地圖副標 { display: none; }
+  .地圖說明鈕 { font-size: 9px; }
+  .地圖區 { aspect-ratio: auto; height: 510px; min-height: 0; }
+  /* 手機仍保留三座島，改為直式錯落配置，入口不會擠在一起。 */
+  .群島插畫 { display: none; }
+  .手機群島插畫 { display: block; position: absolute; inset: 0; width: 100%; height: 100%; }
+  .描述入口 { left: 40%; top: 31%; }
+  .機率入口 { left: 68%; top: 59%; }
+  .抽樣入口 { left: 38%; top: 86%; }
+  .島嶼入口 { min-width: 165px; padding: 8px; border-radius: 8px; }
+  .地圖角註 { bottom: 13px; left: 13px; font-size: 8px; }
+  .地圖座標 { display: none; }
+  .章節區抬頭 { margin-top: 25px; align-items: flex-start; }
+  .章節區抬頭 h2 { font-size: 14px; }
+  .章節區抬頭 p { max-width: 215px; line-height: 1.8; }
+  .章節數量 { font-size: 8px; padding-top: 4px; white-space: nowrap; }
+  .章節卡網格 { grid-template-columns: 1fr; gap: 12px; }
+  .章節卡 { position: relative; padding: 17px 18px 10px 71px; }
+  .章節卡頂 { position: absolute; left: 18px; top: 19px; margin: 0; }
+  .章節狀態 { display: none; }
+  .章節卡標題 strong { font-size: 13px; }
+  .章節卡介紹 { margin-top: 5px; margin-bottom: 10px; font-size: 10px; }
+  .章節卡底 { padding-top: 7px; }
+  .首頁底註 { align-items: flex-start; flex-direction: column; gap: 7px; }
+  .頁尾 { flex-direction: column; padding: 15px 19px 25px; gap: 5px; font-size: 8px; }
+  .課程視窗 { width: calc(100vw - 18px); max-height: calc(100dvh - 20px); border-radius: 12px; }
+  .關閉視窗 { right: 12px; top: 12px; }
+  .課程抬頭 { padding: 26px 21px 20px; }
+  .課程抬頭 h2 { font-size: 22px; }
+  .課程說明 { font-size: 11px; }
+  .步驟列 { padding: 12px 13px; gap: 2px; }
+  .步驟按鈕 { padding: 7px 9px; font-size: 10px; flex: 1; }
+  .課程版面 { padding: 20px 17px; }
+  .實驗面板, .概念卡 { padding: 17px; }
+  .數據列 { gap: 7px; }
+  .數據卡 { padding: 11px 9px; }
+  .數據卡 strong { font-size: 21px; }
+  .數據卡 span, .數據卡 small { font-size: 9px; }
+  .長條圖 { gap: 8px; padding-left: 7px; padding-right: 7px; }
+  .選項列表 { grid-template-columns: 1fr; }
+  .題目卡 { padding: 16px; }
+  .課程頁尾 { padding: 16px 17px; }
+  .課程頁尾 .次要文字 { display: none; }
+  .小視窗 { padding: 28px 23px; }
+  .小視窗 h2 { font-size: 22px; }
+  .分頁抬頭 { padding: 30px 0 24px; }
+  .分頁抬頭 > p:last-child { font-size: 11px; }
+  .路線卡 { padding: 20px 17px; gap: 13px; flex-wrap: wrap; }
+  .路線編號 { width: 40px; height: 46px; font-size: 18px; }
+  .路線資訊 { width: calc(100% - 60px); }
+  .路線資訊 h3 { font-size: 15px; }
+  .路線資訊 p { font-size: 11px; }
+  .路線卡 > .主按鈕, .路線卡 > .次按鈕 { margin-left: 53px; }
+  .手冊卡 { padding: 23px; }
+  .教師統計 { gap: 9px; }
+  .教師統計 .數據卡 { padding: 15px 13px; }
+  .教師統計 .數據卡 strong { font-size: 26px; }
+  .切換組 button { padding: 8px 12px; font-size: 10px; }
+  .工具列 .主按鈕, .工具列 .次按鈕 { font-size: 11px; }
+  .實驗標頭 { gap: 8px; }
+  .實驗標頭 .小標 { letter-spacing: .5px; }
+  .實驗標頭 .文字按鈕 { font-size: 9px; }
+  .數據列 .數據卡 strong { font-size: 19px; }
+  .圖表標籤 { font-size: 9px; gap: 6px; }
+  .骰子舞台 { gap: 12px; padding: 10px 12px; }
+  .骰子舞台 strong { font-size: 11px; }
+  .骰子舞台 .次要文字 { font-size: 10px; }
+  .骰子面 { font-size: 64px; height: 72px; }
+  .教師工具列 { flex-wrap: wrap; }
+  .教師紀錄卡 { padding: 17px; }
+  .難點項 { grid-template-columns: 1fr auto; gap: 7px 12px; }
+  .難點進度 { grid-column: 1; }
+  .難點項 > .文字按鈕 { grid-column: 2; grid-row: 1 / 3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
